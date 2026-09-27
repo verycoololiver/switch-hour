@@ -37,6 +37,8 @@ flowchart TD
     H --> I[Show the lowest estimate and compare it with starting soon]
 ```
 
+The same flow is available as a [shareable diagram](how-it-works.png) for the project submission.
+
 For example, a 2 kWh task during a window averaging 200 g CO₂/kWh has an estimate of **400 g CO₂**. If another complete window averages 150 g CO₂/kWh, its estimate is **300 g CO₂**, or **100 g (25%) lower**. These are forecast comparisons, not measured emissions. The scheduler compares each complete run, not a single low bar on the chart. Its code is in [`scheduler.js`](scheduler.js).
 
 ## Run locally
