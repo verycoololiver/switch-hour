@@ -164,6 +164,7 @@
     document.querySelector('.answer-grid').classList.toggle('same', same);
     document.querySelector('.saving').hidden = same;
     $('best-headline').textContent = `${shortTime(best.start)}.`;
+    updateCountdown();
     $('answer-explanation').textContent = same
       ? `The first available start is already the lowest-emission option before your deadline. You can begin then.`
       : `Your ${task.duration}-hour task still finishes on time. Waiting until this window is forecast to produce less CO₂ than starting soon.`;
@@ -180,6 +181,21 @@
     $('answer-caveat').textContent = state.data.average
       ? 'Uses the NESO average grid intensity forecast at 30-minute resolution. This estimates emissions associated with the task, not the marginal emissions avoided by shifting it. Assumes even power use.'
       : 'Estimate: task kWh × average forecast marginal CO₂/kWh over the run. Assumes even power use. Actual emissions may differ. Check that the timing suits your appliance and routine.';
+  }
+
+  function updateCountdown() {
+    if (!state.result) return;
+    const minutes = Math.ceil((state.result.best.start - Date.now()) / 60000);
+    const remaining = $('time-until-start');
+    if (minutes <= 0) {
+      remaining.textContent = 'Ready to start now';
+    } else if (minutes < 60) {
+      remaining.textContent = `Starts in ${minutes} min`;
+    } else {
+      const hours = Math.floor(minutes / 60);
+      const rest = minutes % 60;
+      remaining.textContent = `Starts in ${hours} hr${rest ? ` ${rest} min` : ''}`;
+    }
   }
 
   function renderChart(result) {
@@ -286,7 +302,8 @@
   function tick() {
     if (document.hidden || state.loading) return;
     if (Date.now() - state.loadedAt >= 5 * 60000) { loadLive(); return; }
-    if (nextStart() !== state.baseTime) calculate();
+    if (nextStart() !== state.baseTime || (state.result && Date.now() >= state.result.best.start)) calculate();
+    else updateCountdown();
   }
   setInterval(tick, 1000);
   document.addEventListener('visibilitychange', tick);

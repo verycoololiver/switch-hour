@@ -9,9 +9,9 @@
   <meta property="og:description" content="Pick a task and deadline. See when the local grid forecast suggests running it.">
   <meta property="og:image" content="https://obstudio.org/tools/switch-hour/thumbnail.png">
   <title>Switch Hour — Find a cleaner time to use electricity</title>
-  <link rel="stylesheet" href="./styles.css?v=2">
-  <script src="./scheduler.js?v=2" defer></script>
-  <script src="./app.js?v=2" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=3">
+  <script src="./scheduler.js?v=3" defer></script>
+  <script src="./app.js?v=3" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#planner">Skip to planner</a>
@@ -56,7 +56,7 @@
       </div>
       <div class="message" id="message" role="status" aria-live="polite">Loading the latest grid forecast…</div>
       <section class="answer" id="answer" aria-labelledby="answer-title" hidden>
-        <div class="answer-top"><div><p class="eyebrow">YOUR START TIME</p><h2 id="answer-title">Start <span id="best-headline">—</span></h2><p id="answer-explanation"></p></div><div class="saving"><small>ESTIMATED CO₂ REDUCTION</small><strong id="saved-percent">—</strong><span id="saved-number">—</span></div></div>
+        <div class="answer-top"><div><p class="eyebrow">YOUR START TIME</p><h2 id="answer-title">Start <span id="best-headline">—</span></h2><p class="countdown" id="time-until-start" role="timer" aria-live="off"></p><p id="answer-explanation"></p></div><div class="saving"><small>ESTIMATED CO₂ REDUCTION</small><strong id="saved-percent">—</strong><span id="saved-number">—</span></div></div>
         <div class="answer-grid"><div class="answer-card now"><span class="card-index">IF YOU START SOON</span><h3 id="baseline-time">—</h3><p id="baseline-range">—</p><strong id="baseline-carbon">—</strong><span>estimated CO₂</span></div><div class="arrow" aria-hidden="true">→</div><div class="answer-card better"><span class="card-index">YOUR SUGGESTED TIME</span><h3 id="best-time">—</h3><p id="best-range">—</p><strong id="best-carbon">—</strong><span>estimated CO₂</span></div></div>
         <div class="answer-actions"><button id="calendar" class="button button-lime" type="button">Add this time to calendar <span aria-hidden="true">↗</span></button><button id="copy" class="button button-subtle" type="button">Copy result</button></div>
         <p class="answer-caveat" id="answer-caveat"></p>
