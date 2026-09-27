@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10241f">
+  <meta name="description" content="Find a cleaner time to run a flexible electrical task using California's public grid forecast.">
+  <meta property="og:title" content="Switch Hour — Make time your climate tool">
+  <meta property="og:description" content="Pick a task and deadline. See when California's grid forecast suggests running it.">
+  <title>Switch Hour — Find a cleaner time to use electricity</title>
+  <link rel="stylesheet" href="./styles.css?v=1">
+  <script src="./scheduler.js?v=1" defer></script>
+  <script src="./app.js?v=1" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#planner">Skip to planner</a>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Switch Hour home"><span class="mark" aria-hidden="true">↗</span> SWITCH<span>HOUR</span><b>.</b></a>
+    <nav aria-label="Page navigation"><a href="#planner">Try it</a><a href="#how">How it works</a><a href="README.md" target="_blank" rel="noopener noreferrer">Docs (README) ↗</a><a class="back-link" href="/tools/">All tools ↗</a></nav>
+  </header>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="pulse"></span> A BETTER MOMENT FOR EVERY WATT</p>
+        <h1 id="hero-title">Don't use less.<br><em>Use it later.</em></h1>
+        <p class="hero-lede">Need to charge your car or run the dishwasher? Tell us when it needs to be done. We'll find a cleaner time to start, using California's electricity forecast.</p>
+        <div class="hero-actions"><button class="button button-lime" id="try-demo" type="button">Try the instant demo <span aria-hidden="true">↗</span></button><a class="button button-ghost" href="#planner">Plan with live data</a></div>
+        <p class="hero-note">No account. No device connection. One decision you can use today.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-top"><span>ILLUSTRATIVE SIGNAL</span><span>SAME TASK • DIFFERENT HOUR</span></div>
+        <div class="art-line"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="art-window"><span>MOVE THE TASK</span><strong>Here looks better.</strong><b>↙</b></div>
+        <div class="art-bottom"><span>HIGHER EMISSIONS</span><span>LOWER EMISSIONS</span></div>
+      </div>
+    </section>
+    <section class="planner-section" id="planner" aria-labelledby="planner-title">
+      <div class="section-intro"><p class="eyebrow">01 / THE PLANNER</p><div><h2 id="planner-title">Same task. <em>Better timing.</em></h2><p>Pick an activity, set a deadline, and get a time to start.</p></div></div>
+      <div class="dashboard">
+        <div class="controls">
+          <div class="control-heading"><span class="step">1</span><h3>What needs doing?</h3></div>
+          <fieldset class="presets"><legend>Choose an activity</legend><label class="preset"><input type="radio" name="activity" data-preset="dishwasher" value="dishwasher">Run the dishwasher <span>2 hr</span></label><label class="preset active"><input type="radio" name="activity" data-preset="ev" value="ev" checked>Charge the car <span>3 hr</span></label><label class="preset"><input type="radio" name="activity" data-preset="laundry" value="laundry">Do the laundry <span>2 hr</span></label></fieldset>
+          <details class="task-details"><summary>Adjust task details <span id="task-summary">3 hr · 21 kWh</span></summary>
+          <div class="form-grid"><label>Run time <span>hours</span><input id="duration" type="number" min="0.5" max="8" step="0.5" value="3" inputmode="decimal"></label><label>Energy use <span>kWh total</span><input id="energy" type="number" min="0.1" max="100" step="0.1" value="21" inputmode="decimal"></label></div>
+          <p class="input-note">These are example amounts. You can use your appliance's energy label for a more personal estimate.</p></details>
+          <label class="select-label" for="deadline">When does it need to be done?</label><select id="deadline"><option value="6">Within 6 hours</option><option value="12">Within 12 hours</option><option value="24" selected>Within 24 hours</option><option value="36">Within 36 hours</option></select>
+          <label class="select-label" for="region">California grid region</label><select id="region"><option value="PGE">PG&amp;E · Northern California</option><option value="SCE">Southern California Edison</option><option value="SDGE">San Diego Gas &amp; Electric</option><option value="SMUD">Sacramento · SMUD</option></select>
+          <button id="calculate" class="button button-dark" type="button">Show my start time <span aria-hidden="true">↗</span></button>
+          <p class="control-foot">Times below are Pacific Time. The pilot covers four California grid regions.</p>
+        </div>
+        <div class="visual-panel">
+          <div class="visual-head"><div><p class="eyebrow">02 / THE GRID</p><h3>Look for the lower bars.</h3></div><span class="status-pill" id="data-status">Loading forecast…</span></div>
+          <p class="visual-sub" id="data-caption">Checking California's electricity forecast…</p>
+          <div class="chart-shell"><div class="chart-axis"><span id="chart-max">—</span><span id="chart-mid">—</span><span>0</span></div><div class="chart-content"><div class="chart-grid" aria-hidden="true"><i></i><i></i><i></i></div><div class="chart-bars" id="chart-bars" role="group" aria-label="Grid emissions chart"></div><div class="chart-labels" id="chart-labels"></div></div></div>
+          <div class="legend"><span><i class="legend-ordinary"></i> Other hours</span><span><i class="legend-baseline"></i> Earliest start</span><span><i class="legend-best"></i> Suggested window</span></div>
+          <p class="chart-note" id="chart-description">Lower bars mean less CO₂ is forecast for using extra electricity. Tap a bar for its value.</p>
+          <button class="text-button" id="refresh-live" type="button">Use the current forecast ↻</button>
+        </div>
+      </div>
+      <div class="message" id="message" role="status" aria-live="polite">Loading the latest California forecast…</div>
+      <section class="answer" id="answer" aria-labelledby="answer-title" hidden>
+        <div class="answer-top"><div><p class="eyebrow">03 / YOUR START TIME</p><h2 id="answer-title">Start <span id="best-headline">—</span></h2><p id="answer-explanation"></p></div><div class="saving"><small>ESTIMATED CO₂ REDUCTION</small><strong id="saved-percent">—</strong><span id="saved-number">—</span></div></div>
+        <div class="answer-grid"><div class="answer-card now"><span class="card-index">IF YOU START SOON</span><h3 id="baseline-time">—</h3><p id="baseline-range">—</p><strong id="baseline-carbon">—</strong><span>estimated CO₂</span></div><div class="arrow" aria-hidden="true">→</div><div class="answer-card better"><span class="card-index">YOUR SUGGESTED TIME</span><h3 id="best-time">—</h3><p id="best-range">—</p><strong id="best-carbon">—</strong><span>estimated CO₂</span></div></div>
+        <div class="answer-actions"><button id="calendar" class="button button-lime" type="button">Add this time to calendar <span aria-hidden="true">↗</span></button><button id="copy" class="button button-subtle" type="button">Copy result</button></div>
+        <p class="answer-caveat" id="answer-caveat"></p>
+      </section>
+    </section>
+    <section class="how" id="how" aria-labelledby="how-title"><div><p class="eyebrow">THE IDEA</p><h2 id="how-title">The deadline stays.<br><em>The hour moves.</em></h2></div><div class="how-content"><p>Flexible tasks like EV charging or a dishwasher do not always need to start immediately. Switch Hour checks each five-minute start time that still meets your deadline, totals the forecast emissions over the full run, and selects the lowest result.</p><div class="method-row"><span>01</span><div><strong>Real grid signal</strong><p>California Energy Commission MIDAS supplies WattTime's regional marginal emissions signal. It estimates the emissions response to additional electricity demand.</p></div></div><div class="method-row"><span>02</span><div><strong>A fair comparison</strong><p>The app assumes the same total kWh and even power use in both windows. It compares the forecast, not your entire household footprint or actual measured savings.</p></div></div><div class="method-row"><span>03</span><div><strong>Your choice, your schedule</strong><p>It never controls your device. Add the suggested time to your calendar if it works for you.</p></div></div><div class="source-links"><a href="https://github.com/california-energy-commission/MIDAS" target="_blank" rel="noopener noreferrer">CEC MIDAS documentation ↗</a><a href="https://www.iea.org/reports/the-value-of-demand-flexibility" target="_blank" rel="noopener noreferrer">Why shifting demand matters ↗</a></div></div></section>
+  </main>
+  <footer><a class="wordmark" href="#top"><span class="mark" aria-hidden="true">↗</span> SWITCH<span>HOUR</span><b>.</b></a><p>Made for Lake Oswego Hacks 2026. <a href="README.md" target="_blank" rel="noopener noreferrer" style="margin-left: 12px; text-decoration: underline;">Technical Spec &amp; Pugh Matrix (README.md) ↗</a></p><a href="#top">Back to top ↑</a></footer>
+</body>
+</html>

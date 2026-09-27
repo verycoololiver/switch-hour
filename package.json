@@ -1,0 +1,20 @@
+{
+  "name": "switch-hour",
+  "version": "1.0.0",
+  "description": "Demand flexibility electricity task scheduler for Lake Oswego Hacks 2026",
+  "main": "scheduler.js",
+  "scripts": {
+    "test": "node --test tests/switch-hour.test.cjs",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "sustainability",
+    "demand-flexibility",
+    "clean-energy",
+    "carbon-reduction",
+    "lake-oswego-hacks-2026",
+    "hackathon"
+  ],
+  "author": "Oliver",
+  "license": "MIT"
+}
