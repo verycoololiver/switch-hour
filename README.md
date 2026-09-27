@@ -1,5 +1,7 @@
 # Switch Hour
 
+![Switch Hour project thumbnail](thumbnail.png)
+
 Switch Hour recommends when to start a flexible electrical task so it finishes before your deadline with a lower forecast emissions estimate. [Try the live app](https://obstudio.org/tools/switch-hour/).
 
 ## Use it
