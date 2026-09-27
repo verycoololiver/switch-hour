@@ -49,3 +49,22 @@ test('real snapshot stays inside the deadline and provides reproducible demo res
   assert.ok(result.saved > 1000 && result.saved < 1100);
   assert.equal(Math.round(result.saved / result.baseline.grams * 100), 16);
 });
+
+test('a visitor arriving mid-interval gets only future 30-minute GB windows', () => {
+  const interval = 1800000;
+  const data = { stepMs: interval, points: Array.from({ length: 12 }, (_, i) => [origin + i * interval, i < 4 ? 500 : 100]) };
+  const arrival = origin + 11 * 60000;
+  const result = findWindow(data, arrival, { duration: 1, energy: 2, deadline: 3, deadlineAt: arrival + 3 * 3600000 });
+  assert.equal(result.baseline.start, origin + interval);
+  assert.ok(result.best.start >= arrival);
+  assert.ok(result.best.end <= arrival + 3 * 3600000);
+});
+
+test('an absolute deadline remains anchored to visitor arrival', () => {
+  const interval = 1800000;
+  const data = { stepMs: interval, points: Array.from({ length: 8 }, (_, i) => [origin + i * interval, i >= 4 ? 10 : 500]) };
+  const arrival = origin + 20 * 60000;
+  const result = findWindow(data, arrival, { duration: 1, energy: 1, deadline: 2, deadlineAt: arrival + 2 * 3600000 });
+  assert.equal(result.best.start, origin + interval);
+  assert.ok(result.best.end <= arrival + 2 * 3600000);
+});
